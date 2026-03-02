@@ -3,8 +3,15 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 from core import LoggerManager
-from dtos import VSI
-from services.commands import CommandResult, ListVSICommand, StartVSICommand, StopVSICommand
+from dtos import VSI, VSITemplate
+from services.commands import (
+    CommandResult,
+    CreateVSICommand,
+    DeleteVSICommand,
+    ListVSICommand,
+    StartVSICommand,
+    StopVSICommand,
+)
 
 
 class VSIController:
@@ -60,6 +67,38 @@ class VSIController:
             self.log.info(f"VSI id='{vsi_id}' stop request accepted: {result.message}")
         else:
             self.log.warning(f"VSI id='{vsi_id}' stop request failed: {result.message}")
+        return result
+
+    def create_vsi(self, template: VSITemplate) -> CommandResult[VSI]:
+        """
+        Create a new VSI using the provided template.
+
+        :param template: VSITemplate with all parameters needed to create the VSI
+        :return: CommandResult with the created VSI DTO on success
+        """
+        self.log.info(f"Creating VSI name='{template.name}' in region='{self.region}'")
+        result = CreateVSICommand(region=self.region, template=template).execute()
+        if result.success:
+            self.log.info(f"VSI name='{template.name}' created: {result.message}")
+        else:
+            self.log.warning(f"VSI name='{template.name}' creation failed: {result.message}")
+        return result
+
+    def delete_vsi(self, vsi_id: str) -> CommandResult[str | None]:
+        """
+        Delete a VSI by its ID.
+
+        Note: the VSI must be in 'stopped' state before deletion.
+
+        :param vsi_id: ID of the VSI to delete
+        :return: CommandResult with optional success message
+        """
+        self.log.info(f"Requesting deletion of VSI id='{vsi_id}' in region='{self.region}'")
+        result = DeleteVSICommand(region=self.region, vsi_id=vsi_id).execute()
+        if result.success:
+            self.log.info(f"VSI id='{vsi_id}' deletion accepted: {result.message}")
+        else:
+            self.log.warning(f"VSI id='{vsi_id}' deletion failed: {result.message}")
         return result
 
 
