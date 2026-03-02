@@ -1,10 +1,9 @@
-# Copyright (c) 2025 Salvatore D'Angelo
-# Author: Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo
-# License: MIT
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
 import os
 from typing import Optional
-
 from dotenv import load_dotenv
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_vpc import VpcV1
@@ -24,7 +23,7 @@ class IBMVPCClient:
     # Class-level reference to the singleton instance
     _instance: Optional["IBMVPCClient"] = None
 
-    def __new__(cls, region: Optional[str] = None):
+    def __new__(cls, region: str | None = None):
         """
         Ensures only one instance of the client is created.
         Requires `region` on the first instantiation to properly configure the client.
@@ -40,7 +39,7 @@ class IBMVPCClient:
             cls._instance._init(region)
         return cls._instance
 
-    def _init(self, region: str):
+    def _init(self, region: str) -> None:
         """
         Internal initialization logic for setting up the authenticated VPC client.
 
@@ -50,15 +49,15 @@ class IBMVPCClient:
         # Load environment variables from .env
         load_dotenv()
         # Read the API key required to authenticate with IBM Cloud
-        api_key = os.environ.get("API_KEY")
+        api_key: str | None = os.environ.get("API_KEY")
         if not api_key:
             raise ValueError("API_KEY not set in environment variables")
         # Set up the IBM IAM authenticator using the API key
-        authenticator = IAMAuthenticator(api_key)
+        authenticator: IAMAuthenticator = IAMAuthenticator(apikey=api_key)
         # Create the VPC client with the authenticator
         self.client = VpcV1(authenticator=authenticator)
         # Set the correct service URL for the given region
-        self.client.set_service_url(f"https://{region}.iaas.cloud.ibm.com/v1")
+        self.client.set_service_url(service_url=f"https://{region}.iaas.cloud.ibm.com/v1")
 
     def get_client(self) -> VpcV1:
         """

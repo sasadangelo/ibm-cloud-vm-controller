@@ -1,14 +1,12 @@
-# Copyright (c) 2025 Salvatore D'Angelo
-# Author: Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo
-# License: MIT
-from typing import List
-
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
 from dtos import VSI
 from services import CommandResult, VSIController
 
 
-def print_vsi_list(vsi_list: List[VSI]) -> None:
+def print_vsi_list(vsi_list: list[VSI]) -> None:
     """Prints the list of VSI objects in a human-readable format."""
     print(f"Retrieved {len(vsi_list)} VSI(s):")
     for vsi in vsi_list:
@@ -19,38 +17,42 @@ def print_vsi_list(vsi_list: List[VSI]) -> None:
 
 
 def main() -> None:
-    controller = VSIController()
+    controller: VSIController = VSIController(region="us-east")
 
     # List all VSIs
-    list_result_1: CommandResult[List[VSI]] = controller.list_vsi()
+    list_result_1: CommandResult[list[VSI]] = controller.list_vsi()
 
-    if list_result_1.success and list_result_1.data:
-        print_vsi_list(list_result_1.data)
+    if list_result_1.success:
+        if list_result_1.data:
+            print_vsi_list(vsi_list=list_result_1.data)
+        else:
+            print(f"No VSI found: {list_result_1.message}")
+            return
     else:
         print(f"❌ Failed to retrieve VSI list: {list_result_1.message}")
         return
 
     # Optional: Find a VSI by name and stop/start it
-    target_name = "test-vm"
-    vsi = next((v for v in list_result_1.data if v.name == target_name), None)
+    target_name = "matteo-test"
+    vsi: VSI | None = next((v for v in list_result_1.data if v.name == target_name), None)
 
     if not vsi:
         print(f"⚠️  VSI with name '{target_name}' not found.")
         return
 
     # Stop the VSI
-    stop_result = controller.stop_vsi(vsi_id=vsi.id)
+    stop_result: CommandResult[str | None] = controller.stop_vsi(vsi_id=vsi.id)
     print(f"🛑 Stop result: {stop_result.message}")
 
     # Start the VSI again
-    start_result = controller.start_vsi(vsi_id=vsi.id)
+    start_result: CommandResult[str | None] = controller.start_vsi(vsi_id=vsi.id)
     print(f"🚀 Start result: {start_result.message}")
 
     # List all VSIs
-    list_result_2: CommandResult[List[VSI]] = controller.list_vsi()
+    list_result_2: CommandResult[list[VSI]] = controller.list_vsi()
 
     if list_result_2.success and list_result_2.data:
-        print_vsi_list(list_result_2.data)
+        print_vsi_list(vsi_list=list_result_2.data)
     else:
         print(f"❌ Failed to retrieve VSI list: {list_result_2.message}")
         return

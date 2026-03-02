@@ -35,6 +35,7 @@ At the core of the application lies the **service layer**, which is the main int
 ### `VSIController`
 
 This class exposes the public methods:
+
 - `list_vsi(zone: str)`
 - `start_vsi(vsi_id: str, zone: str)`
 - `stop_vsi(vsi_id: str, zone: str)`
@@ -51,6 +52,7 @@ Each operation (`list`, `start`, `stop`) is implemented using the **Command Patt
 👉 [refactoring.guru/design-patterns/command](https://refactoring.guru/design-patterns/command)
 
 Each command:
+
 - Implements a common interface `BaseCommand`
 - Is executed using the `execute()` method
 - Returns a `CommandResult[T]` containing the result and status
@@ -69,6 +71,7 @@ Example: `VSI` is a data class used to represent the properties of a Virtual Ser
 The class `IBMVPCClient` is implemented as a **Singleton**.
 
 Its goal is to:
+
 - Authenticate using the IBM Cloud API key (loaded from `.env`)
 - Provide a single configured instance of the `VpcV1` client per zone
 

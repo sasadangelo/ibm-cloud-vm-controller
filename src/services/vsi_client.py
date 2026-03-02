@@ -1,17 +1,9 @@
-# Copyright (c) 2025 Salvatore D'Angelo
-# Author: Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo
-# License: MIT
-from typing import List, Optional
-
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
 from dtos import VSI
-from services.commands import (
-    CommandResult,
-    IBMVPCClient,
-    ListVSICommand,
-    StartVSICommand,
-    StopVSICommand,
-)
+from services.commands import CommandResult, IBMVPCClient, ListVSICommand, StartVSICommand, StopVSICommand
 
 
 class VSIController:
@@ -19,21 +11,21 @@ class VSIController:
     High-level interface for controlling IBM Cloud Virtual Server Instances.
     """
 
-    def __init__(self, region: str = "us-south"):
+    def __init__(self, region: str = "us-south") -> None:
         # Set up the singleton only once
         IBMVPCClient(region)  # initializes the singleton, region must be passed
 
-    def list_vsi(self) -> CommandResult[List[VSI]]:
+    def list_vsi(self) -> CommandResult[list[VSI]]:
         """
         List all VSIs in the specified zone.
 
         :param zone: IBM Cloud zone (default: "us-south")
         :return: CommandResult with list of VSI DTOs
         """
-        command = ListVSICommand()
+        command: ListVSICommand = ListVSICommand()
         return command.execute()
 
-    def start_vsi(self, vsi_id: str) -> CommandResult[Optional[str]]:
+    def start_vsi(self, vsi_id: str) -> CommandResult[str | None]:
         """
         Start a VSI by its ID.
 
@@ -41,10 +33,10 @@ class VSIController:
         :param zone: IBM Cloud zone (default: "us-south")
         :return: CommandResult with optional success message
         """
-        command = StartVSICommand(vsi_id=vsi_id)
+        command: StartVSICommand = StartVSICommand(vsi_id=vsi_id)
         return command.execute()
 
-    def stop_vsi(self, vsi_id: str) -> CommandResult[Optional[str]]:
+    def stop_vsi(self, vsi_id: str) -> CommandResult[str | None]:
         """
         Stop a VSI by its ID.
 
@@ -52,5 +44,5 @@ class VSIController:
         :param zone: IBM Cloud zone (default: "us-south")
         :return: CommandResult with optional success message
         """
-        command = StopVSICommand(vsi_id=vsi_id)
+        command: StopVSICommand = StopVSICommand(vsi_id=vsi_id)
         return command.execute()

@@ -1,7 +1,7 @@
-# Copyright (c) 2025 Salvatore D'Angelo
-# Author: Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo
-# License: MIT
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
 from .base import CommandResult
 from .ibm_vpc_client import IBMVPCClient
 from .list import ListVSICommand

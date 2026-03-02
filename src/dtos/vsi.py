@@ -1,17 +1,16 @@
-# Copyright (c) 2025 Salvatore D'Angelo
-# Author: Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo
-# License: MIT
-from dataclasses import dataclass
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
+from pydantic import BaseModel, Field
 
 
-@dataclass
-class VSI:
-    """Data Transfer Object representing a Virtual Server Instance (VSI)."""
+class VSI(BaseModel):
+    """Data model representing a Virtual Server Instance (VSI)."""
 
-    id: str
-    name: str
-    status: str
-    zone: str
-    cpu: int
-    ram: int
+    id: str = Field(default=..., description="Unique identifier of the VSI")
+    name: str = Field(default=..., description="Name of the VSI")
+    status: str = Field(default=..., description="Current status of the VSI (e.g., running, stopped)")
+    zone: str = Field(default=..., description="Zone in which the VSI is deployed")
+    cpu: int = Field(default=..., description="Number of virtual CPUs")
+    ram: int = Field(default=..., description="Memory (RAM) in MB")

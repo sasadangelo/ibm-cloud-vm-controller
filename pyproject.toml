@@ -1,28 +1,40 @@
-[tool.poetry]
-authors = ["D'Angelo Salvatore <you@example.com>"]
+[project]
+authors = [{name = "D'Angelo Salvatore", email = "you@example.com"}]
+dependencies = [
+  "ibm-vpc==0.29.1",
+  "mcp[cli]>=1.10.1",
+  "pandas==2.3.0",
+  "pydantic>=2.11.7",
+  "python-dotenv==1.1.1",
+]
 description = "Agentic tool to control IBM Cloud Virtual Servers (VSI)"
-license = "MIT"
+license = {text = "MIT"}
 name = "ibm-cloud-vm-controller"
-package-mode = false
 readme = "README.md"
+requires-python = ">=3.13"
 version = "0.1.0"
 
-[tool.poetry.dependencies]
-ibm-vpc = "0.29.1"
-pandas = "2.3.0"
-python = ">=3.13"
-python-dotenv = "1.1.1"
+[dependency-groups]
+dev = [
+  "detect-secrets==1.5.0",
+  "mypy>=1.16.1",
+  "pre-commit==4.2.0",
+  "pytest>=8.4.1",
+  "flake8>=7.0.0",
+  "black>=25.0.0",
+  "isort>=5.13.0",
+]
 
-[tool.poetry.group.dev.dependencies]
-detect-secrets = "1.5.0"
-mypy = "^1.16.1"
-pre-commit = "4.2.0"
-pytest = "^8.4.1"
+[tool.uv]
+package = false
 
 [tool.black]
 line-length = 120
 
 [tool.isort]
+known_first_party = ["dtos", "services"]
+line_length = 120
+lines_between_sections = 0
 profile = "black"
 
 [tool.mypy]
@@ -41,7 +53,3 @@ module = "ibm_vpc"
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 module = "pandas"
-
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core"]
