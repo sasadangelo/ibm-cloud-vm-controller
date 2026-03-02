@@ -1,4 +1,4 @@
-# IBM Cloud VM Controller — MCP Server
+# IBM Cloud VSI Controller — MCP Server
 
 [![Python](https://img.shields.io/badge/python-3.13%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
