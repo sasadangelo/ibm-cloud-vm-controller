@@ -2,9 +2,11 @@
 authors = [{name = "D'Angelo Salvatore", email = "you@example.com"}]
 dependencies = [
   "ibm-vpc==0.29.1",
+  "loguru>=0.7.3",
   "mcp[cli]>=1.10.1",
   "pandas==2.3.0",
   "pydantic>=2.11.7",
+  "pydantic-settings>=2.9.1",
   "python-dotenv==1.1.1",
 ]
 description = "Agentic tool to control IBM Cloud Virtual Servers (VSI)"
@@ -32,7 +34,7 @@ package = false
 line-length = 120
 
 [tool.isort]
-known_first_party = ["dtos", "services"]
+known_first_party = ["core", "dtos", "services"]
 line_length = 120
 lines_between_sections = 0
 profile = "black"
