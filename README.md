@@ -5,7 +5,7 @@
 [![MCP](https://img.shields.io/badge/MCP-FastMCP-green.svg)](https://github.com/modelcontextprotocol/python-sdk)
 [![uv](https://img.shields.io/badge/package%20manager-uv-purple.svg)](https://docs.astral.sh/uv/)
 
-**IBM Cloud VM Controller** is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that exposes tools to manage **Virtual Server Instances (VSIs)** on IBM Cloud VPC.
+**IBM Cloud VSI Controller** is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that exposes tools to manage **Virtual Server Instances (VSIs)** on IBM Cloud VPC.
 
 It enables AI assistants (such as Claude, Cursor, or any MCP-compatible client) to autonomously **list**, **create**, **start**, **stop**, and **delete** IBM Cloud virtual machines through natural language — without writing a single line of code.
 
@@ -13,7 +13,7 @@ It enables AI assistants (such as Claude, Cursor, or any MCP-compatible client) 
 
 ## 📋 Table of Contents
 
-- [IBM Cloud VM Controller — MCP Server](#ibm-cloud-vm-controller--mcp-server)
+- [IBM Cloud VSI Controller — MCP Server](#ibm-cloud-vm-controller--mcp-server)
   - [📋 Table of Contents](#-table-of-contents)
   - [✨ Features](#-features)
   - [🧱 Architecture](#-architecture)
@@ -312,7 +312,7 @@ To use this MCP server with [Claude Desktop](https://claude.ai/download), add th
 
 > Replace `/absolute/path/to/ibm-cloud-vm-controller` with the actual path on your machine.
 
-After saving the file, restart Claude Desktop. You will see the IBM Cloud VM Controller tools available in the tool panel.
+After saving the file, restart Claude Desktop. You will see the IBM Cloud VSI Controller tools available in the tool panel.
 
 ---
 
